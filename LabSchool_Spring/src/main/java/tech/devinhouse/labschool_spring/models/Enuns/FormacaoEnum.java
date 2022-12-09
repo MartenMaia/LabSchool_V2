@@ -1,4 +1,4 @@
-package tech.devinhouse.labschool_spring.models;
+package tech.devinhouse.labschool_spring.models.Enuns;
 
 public enum FormacaoEnum {
 

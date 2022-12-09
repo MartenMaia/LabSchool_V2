@@ -7,6 +7,12 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tech.devinhouse.labschool_spring.models.Enuns.EstadoEnum;
+import tech.devinhouse.labschool_spring.models.Enuns.ExperienciaEnum;
+import tech.devinhouse.labschool_spring.models.Enuns.FormacaoEnum;
+import tech.devinhouse.labschool_spring.models.Enuns.SituacaoEnum;
+
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -23,5 +29,12 @@ public class Professor extends Pessoa{
 
     @Enumerated(EnumType.STRING)
     private FormacaoEnum formacao;
+
+    public Professor(Integer codigo, String nome, String telefone, LocalDate dataNascimento, Long cpf, EstadoEnum estado, ExperienciaEnum experiencia, FormacaoEnum formacao) {
+        super(codigo, nome, telefone, dataNascimento, cpf);
+        this.estado = estado;
+        this.experiencia = experiencia;
+        this.formacao = formacao;
+    }
 
 }
