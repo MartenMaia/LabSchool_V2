@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Data
 public class Pessoa {
 
     @Id

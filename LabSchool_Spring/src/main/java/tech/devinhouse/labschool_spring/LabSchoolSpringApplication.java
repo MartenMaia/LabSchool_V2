@@ -4,7 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import tech.devinhouse.labschool_spring.models.Aluno;
 import tech.devinhouse.labschool_spring.models.Enuns.EstadoEnum;
@@ -28,6 +30,21 @@ public class LabSchoolSpringApplication {
     }
 
     @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
+
+    @Bean
+    public LocalValidatorFactoryBean validator() {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        bean.setValidationMessageSource(messageSource());
+        return bean;
+    }
+
+    @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper;
@@ -37,11 +54,11 @@ public class LabSchoolSpringApplication {
     CommandLineRunner run(AlunoService alunoService, ProfessorService professorService, PedagogoService pedagogoService) {
         return args -> {  // inserting data after application is up
             if (alunoService.consultar().isEmpty()) {
-                alunoService.criar(new Aluno(null,"Bart Simpson","11-11111-1212",LocalDate.of(2014,10,29),11839750073L,SituacaoEnum.IRREGULAR,3.5D,0));
-                alunoService.criar(new Aluno(null,"Lisa Simpson","11-22222-2222",LocalDate.of(2012,10,29),17158947076L,SituacaoEnum.ATIVO,10D,0));
-                alunoService.criar(new Aluno(null,"Meggie Simpson","12-20002-2200",LocalDate.of(2019,10,29),63701210020L,SituacaoEnum.ATIVO,9D,0));
-                alunoService.criar(new Aluno(null,"Milhouse Van Houten","11-33333-2222",LocalDate.of(2014,10,29),30119137062L,SituacaoEnum.ATIVO,8D,0));
-                alunoService.criar(new Aluno(null,"Nelson Muntz","11-44333-4444",LocalDate.of(2007,10,29),95704094015L,SituacaoEnum.INATIVO,2D,0));
+                alunoService.criar(new Aluno(null,"Bart Simpson","11-11111-1212",LocalDate.of(2014,10,29),11839750073L,SituacaoEnum.IRREGULAR,3.5F));
+                alunoService.criar(new Aluno(null,"Lisa Simpson","11-22222-2222",LocalDate.of(2012,10,29),17158947076L,SituacaoEnum.ATIVO,10F));
+                alunoService.criar(new Aluno(null,"Meggie Simpson","12-20002-2200",LocalDate.of(2019,10,29),63701210020L,SituacaoEnum.ATIVO,9F));
+                alunoService.criar(new Aluno(null,"Milhouse Van Houten","11-33333-2222",LocalDate.of(2014,10,29),30119137062L,SituacaoEnum.ATIVO,8F));
+                alunoService.criar(new Aluno(null,"Nelson Muntz","11-44333-4444",LocalDate.of(2007,10,29),95704094015L,SituacaoEnum.INATIVO,2F));
             }
             if (professorService.consultar().isEmpty()) {
                 professorService.criar(new Professor(null,"Walter White","14-22998-1882",LocalDate.of(1982,10,30),40539019011L, EstadoEnum.ATIVO, ExperienciaEnum.FULL_STACK, FormacaoEnum.MESTRADO));
