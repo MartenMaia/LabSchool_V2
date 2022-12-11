@@ -48,4 +48,17 @@ public class AlunoController {
         return ResponseEntity.ok(resp);
     }
 
+    @GetMapping("{codigo}")
+    public ResponseEntity<AlunoResponse> get(@PathVariable("codigo") Integer codigo){
+        Aluno aluno = service.consultar(codigo);
+        AlunoResponse resp = mapper.map(aluno,AlunoResponse.class);
+        return ResponseEntity.ok(resp);
+    }
+
+    @DeleteMapping("{codigo}")
+    public ResponseEntity<AlunoResponse> delete(@PathVariable("codigo") Integer codigo){
+        service.deletar(codigo);
+        return ResponseEntity.noContent().build();
+    }
+
 }

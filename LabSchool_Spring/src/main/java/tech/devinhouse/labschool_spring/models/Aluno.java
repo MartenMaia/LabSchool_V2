@@ -31,4 +31,8 @@ public class Aluno extends Pessoa{
         this.atendimentos = 0;
     }
 
+    public void atender(){
+        this.atendimentos++;
+    }
+
 }

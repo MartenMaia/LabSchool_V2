@@ -23,4 +23,8 @@ public class Pedagogo extends Pessoa{
         this.atendimentos = atendimentos;
     }
 
+    public void atender(){
+        this.atendimentos++;
+    }
+
 }

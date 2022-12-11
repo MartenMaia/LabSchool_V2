@@ -21,7 +21,7 @@ public class AlunoService {
     @Autowired
     private AlunoRepository alunoRepo;
 
-    public Aluno criar(Aluno aluno){ //melhorar
+    public Aluno criar(Aluno aluno){
         if(alunoRepo.findByCpf(aluno.getCpf()).isPresent())
             throw new CpfJaCadastradoException(aluno.getCpf(),Aluno.class.getSimpleName());
         return alunoRepo.save(aluno);
@@ -42,6 +42,16 @@ public class AlunoService {
         }
     }
 
+    public Aluno consultar(Integer id){
+        try {
+            Optional<Aluno> alunoOpt = alunoRepo.findById(id);
+            Aluno aluno = alunoOpt.get();
+            return aluno;
+        } catch (Exception e){
+            throw new RegistroNaoEncontradoException(id.toString());
+        }
+    }
+
     public Aluno atualizar(Integer codigo,Map<String,String> map) {
         String situacao = map.get("situacao");
         Optional<Aluno> alunoOpt = alunoRepo.findById(codigo);
@@ -55,5 +65,16 @@ public class AlunoService {
         }
         aluno = alunoRepo.save(aluno);
         return aluno;
+    }
+
+    public void deletar(Integer codigo) {
+        try {
+            Optional<Aluno> alunoOpt = alunoRepo.findById(codigo);
+            Aluno aluno = alunoOpt.get();
+            alunoRepo.deleteById(codigo);
+        } catch (Exception e){
+            throw new RegistroNaoEncontradoException(codigo.toString());
+        }
+
     }
 }
