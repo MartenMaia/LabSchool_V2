@@ -32,7 +32,9 @@ public class Aluno extends Pessoa{
     }
 
     public void atender(){
+
         this.atendimentos++;
+        this.situacao = SituacaoEnum.ATENDIMENTO_PEDAGOGICO;
     }
 
 }
